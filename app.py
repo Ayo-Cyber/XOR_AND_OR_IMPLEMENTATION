@@ -3,12 +3,12 @@ import numpy as np
 import os
 import pandas as pd
 
-# Set environment variables to prevent threading issues
+# Set environment variables to prevent threading issues : this was cause my mac was doing one way
 os.environ['OMP_NUM_THREADS'] = '1'
 os.environ['MKL_NUM_THREADS'] = '1'
 os.environ['OPENBLAS_NUM_THREADS'] = '1'
 
-# Import TensorFlow with error handling
+# Import TensorFlow with error handling : also here, you could implement it without the try and except and it would work , i beleive
 try:
     import tensorflow as tf
     # Suppress TensorFlow warnings
