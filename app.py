@@ -1,6 +1,7 @@
 import streamlit as st
 import numpy as np
 import os
+import pandas as pd
 
 # Set environment variables to prevent threading issues
 os.environ['OMP_NUM_THREADS'] = '1'
@@ -85,10 +86,15 @@ if st.session_state.model is not None:
                 predictions = predictions.flatten()
             predictions = np.round(predictions).astype(int)
 
-        # Display truth table
-        st.write("**Input 1 | Input 2 | Prediction**")
-        for i in range(len(X)):
-            st.write(f"   {X[i][0]}    |    {X[i][1]}   |     {predictions[i]}")
+        # Create a DataFrame for truth table
+        truth_table = pd.DataFrame({
+            'Input 1': X[:, 0],
+            'Input 2': X[:, 1],
+            'Prediction': predictions
+        })
+
+        # Display the DataFrame as a table
+        st.dataframe(truth_table)
 
         # Interactive testing
         st.subheader("Test the Model")
@@ -111,8 +117,16 @@ if st.session_state.model is not None:
                 if prediction.ndim > 1:
                     prediction = prediction.flatten()
                 prediction = np.round(prediction).astype(int)[0]
-                
-                st.write(f"**Prediction: {prediction}**")
+
+                # Create a DataFrame for the prediction
+                prediction_df = pd.DataFrame({
+                    'Input 1': [input1],
+                    'Input 2': [input2],
+                    'Prediction': [prediction]
+                })
+
+                # Display the prediction result in a table format
+                st.dataframe(prediction_df)
                 
             except Exception as e:
                 st.error(f"Error making prediction: {str(e)}")
