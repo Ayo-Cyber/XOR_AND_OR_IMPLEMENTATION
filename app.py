@@ -18,9 +18,9 @@ except ImportError:
     TENSORFLOW_AVAILABLE = False
     st.warning("TensorFlow not available. Only Numpy implementation will work.")
 
-from logic_gates import train_numpy_model
+from src.logic_gates import train_numpy_model
 if TENSORFLOW_AVAILABLE:
-    from logic_gates import train_tensorflow_model
+    from src.logic_gates import train_tensorflow_model
 
 st.title("Logic Gate Neural Network")
 
